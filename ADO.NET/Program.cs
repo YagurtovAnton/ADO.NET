@@ -13,6 +13,7 @@ namespace ADO.NET
 	{
 		static void Main(string[] args)
 		{
+#if INTRO
 			//1) Берем строку подключения:
 			const int PADDING = 30;
 			const string CONNECTION_STRING = "Data Source=(localdb)\\MSSQLLocalDB;" +
@@ -55,7 +56,13 @@ namespace ADO.NET
 			connection.Close();
 
 			Console.Read();
-			
+
+#endif
+			//Connector.Select("*","Directors ");
+			//Connector.Select("title,release_date,FORMATMESSAGE(N'%s %s',first_name,last_name)", "Movies,Directors", "director=director_id");
+			Connector.InsertDirectors("George","Matrin");
+			Connector.SelectDirectors();
+			Connector.SelectMovies();
 		}
 	}
 }
