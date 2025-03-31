@@ -14,16 +14,26 @@ namespace Academy
 {
 	public partial class Main : Form
 	{
+
 		Connector connector;
 		public Main()
 		{
 			InitializeComponent();
+
 			connector = new Connector
 				(
 					ConfigurationManager.ConnectionStrings["PV_319_Import"].ConnectionString
 				);
-			dgvTeachers.DataSource = connector.Select("*","Students");
+		
+			dgvStudents.DataSource = connector.Select
+				(
+					"last_name,first_name,middle_name,birth_date,group_name,direction_name",
+					"Students,Groups,Directions",
+					"[group]=group_id AND direction=direction_id"
+				);
+			toolStripStatusLabelCount.Text = $"Количество студентов:{dgvStudents.RowCount - 1}.";
 		}
+
 		private void tabControl_SelectedIndexChanged(object sender, EventArgs e)
 		{
 			switch (tabControl.SelectedIndex)
@@ -48,7 +58,21 @@ namespace Academy
 					toolStripStatusLabelCount.Text = $"Количество групп:{dgvGroups.RowCount - 1}.";
 					break;
 				case 2:
-					dgvDirections.DataSource = connector.Select("*", "Directions");
+					//dgvDirections.DataSource = connector.Select
+					//	(
+					//	"direction_name,COUNT(DISTINCT group_id) AS N'Количество групп' , COUNT(stud_id) AS N'Количество студентов'", 
+					//	"Students,Groups,Directions",
+					//	"[group]=group_id AND direction=direction_id",
+					//	"direction_name"
+					//	);
+					dgvDirections.DataSource = connector.Select
+						(
+						"direction_name,COUNT(DISTINCT group_id) AS N'Количество групп' , COUNT(stud_id) AS N'Количество студентов'",
+						"Students RIGHT JOIN Groups ON([group]=group_id) RIGHT JOIN Directions ON(direction=direction_id)",
+						"",
+						"direction_name"
+						);
+
 					toolStripStatusLabelCount.Text = $"Количество направлений:{dgvDirections.RowCount - 1}.";
 					break;
 				case 3:

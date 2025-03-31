@@ -14,22 +14,27 @@ namespace Academy
 {
 	internal class Connector
 	{
-		readonly string CONNECTION_STRING;//= ConfigurationManager["PV_319_Import"].ConnectionString;
+		readonly string CONNECTION_STRING;// = ConfigurationManager.ConnectionStrings["PV_319_Import"].ConnectionString;
 		SqlConnection connection;
 		public Connector(string connection_string)
 		{
-			CONNECTION_STRING = ConfigurationManager.ConnectionStrings["PV_319_Import"].ConnectionString;
+		
+			CONNECTION_STRING = connection_string;
 			connection = new SqlConnection(CONNECTION_STRING);
+			AllocConsole();
+			Console.WriteLine(CONNECTION_STRING);
 		}
 		~Connector()
-		{ 
+		{
 			FreeConsole();
 		}
-		public DataTable Select(string columns, string tables, string condition = "")
+		public DataTable Select(string columns, string tables, string condition = "", string group_by = "")
 		{
 			DataTable table = null;
+
 			string cmd = $"SELECT {columns} FROM {tables}";
 			if (condition != "") cmd += $" WHERE {condition}";
+			if (group_by != "") cmd += $" GROUP BY {group_by}";
 			cmd += ";";
 			SqlCommand command = new SqlCommand(cmd, connection);
 			connection.Open();
@@ -37,14 +42,17 @@ namespace Academy
 
 			if (reader.HasRows)
 			{
-				//1) 
+				//1) Создаем таблицу:
 				table = new DataTable();
-				//2) 
+				table.Load(reader);
+#if OLD
+				//2) Добавляем в нее поля:
 				for (int i = 0; i < reader.FieldCount; i++)
 				{
 					table.Columns.Add();
 				}
-				//3)
+
+				//3) Заполняем таблицу:
 				while (reader.Read())
 				{
 					DataRow row = table.NewRow();
@@ -54,6 +62,7 @@ namespace Academy
 					}
 					table.Rows.Add(row);
 				}
+#endif
 			}
 
 			reader.Close();
