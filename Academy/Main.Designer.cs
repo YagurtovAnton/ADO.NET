@@ -32,7 +32,7 @@
 			this.toolStripStatusLabelCount = new System.Windows.Forms.ToolStripStatusLabel();
 			this.tabControl = new System.Windows.Forms.TabControl();
 			this.tabPageStudents = new System.Windows.Forms.TabPage();
-			this.comboBox1 = new System.Windows.Forms.ComboBox();
+			this.cbStudentsDirection = new System.Windows.Forms.ComboBox();
 			this.dgvStudents = new System.Windows.Forms.DataGridView();
 			this.tabPageGroups = new System.Windows.Forms.TabPage();
 			this.cbGroupsDirection = new System.Windows.Forms.ComboBox();
@@ -43,6 +43,7 @@
 			this.dgvDisciplines = new System.Windows.Forms.DataGridView();
 			this.tabPageTeachers = new System.Windows.Forms.TabPage();
 			this.dgvTeachers = new System.Windows.Forms.DataGridView();
+			this.cbStudentsGroups = new System.Windows.Forms.ComboBox();
 			this.statusStrip.SuspendLayout();
 			this.tabControl.SuspendLayout();
 			this.tabPageStudents.SuspendLayout();
@@ -90,7 +91,8 @@
 			// 
 			// tabPageStudents
 			// 
-			this.tabPageStudents.Controls.Add(this.comboBox1);
+			this.tabPageStudents.Controls.Add(this.cbStudentsGroups);
+			this.tabPageStudents.Controls.Add(this.cbStudentsDirection);
 			this.tabPageStudents.Controls.Add(this.dgvStudents);
 			this.tabPageStudents.Location = new System.Drawing.Point(4, 25);
 			this.tabPageStudents.Name = "tabPageStudents";
@@ -100,13 +102,14 @@
 			this.tabPageStudents.Text = "Students";
 			this.tabPageStudents.UseVisualStyleBackColor = true;
 			// 
-			// comboBox1
+			// cbStudentsDirection
 			// 
-			this.comboBox1.FormattingEnabled = true;
-			this.comboBox1.Location = new System.Drawing.Point(405, 5);
-			this.comboBox1.Name = "comboBox1";
-			this.comboBox1.Size = new System.Drawing.Size(423, 24);
-			this.comboBox1.TabIndex = 1;
+			this.cbStudentsDirection.FormattingEnabled = true;
+			this.cbStudentsDirection.Location = new System.Drawing.Point(405, 6);
+			this.cbStudentsDirection.Name = "cbStudentsDirection";
+			this.cbStudentsDirection.Size = new System.Drawing.Size(423, 24);
+			this.cbStudentsDirection.TabIndex = 1;
+			this.cbStudentsDirection.SelectedIndexChanged += new System.EventHandler(this.cbStudentsDirection_SelectedIndexChanged);
 			// 
 			// dgvStudents
 			// 
@@ -229,6 +232,15 @@
 			this.dgvTeachers.Size = new System.Drawing.Size(840, 470);
 			this.dgvTeachers.TabIndex = 2;
 			// 
+			// cbStudentsGroups
+			// 
+			this.cbStudentsGroups.FormattingEnabled = true;
+			this.cbStudentsGroups.Location = new System.Drawing.Point(6, 6);
+			this.cbStudentsGroups.Name = "cbStudentsGroups";
+			this.cbStudentsGroups.Size = new System.Drawing.Size(393, 24);
+			this.cbStudentsGroups.TabIndex = 2;
+			this.cbStudentsGroups.SelectedIndexChanged += new System.EventHandler(this.tabControl_SelectedIndexChanged);
+			// 
 			// Main
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -272,8 +284,9 @@
 		private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabelCount;
 		private System.Windows.Forms.DataGridView dgvDirections;
 		private System.Windows.Forms.DataGridView dgvDisciplines;
-		private System.Windows.Forms.ComboBox comboBox1;
+		private System.Windows.Forms.ComboBox cbStudentsDirection;
 		private System.Windows.Forms.ComboBox cbGroupsDirection;
+		private System.Windows.Forms.ComboBox cbStudentsGroups;
 	}
 }
 
