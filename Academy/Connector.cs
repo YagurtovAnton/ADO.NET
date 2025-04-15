@@ -1,24 +1,24 @@
-﻿using System;
+﻿//#define OLD
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Runtime;
-
-using System.Configuration;
-using System.Data.SqlClient;
 using System.Runtime.InteropServices;
+
 using System.Data;
+using System.Data.SqlClient;
+using System.Configuration;
 
 namespace Academy
 {
-	internal class Connector
+	class Connector
 	{
 		readonly string CONNECTION_STRING;// = ConfigurationManager.ConnectionStrings["PV_319_Import"].ConnectionString;
 		SqlConnection connection;
 		public Connector(string connection_string)
 		{
-		
+			//CONNECTION_STRING = ConfigurationManager.ConnectionStrings["PV_319_Import"].ConnectionString;
 			CONNECTION_STRING = connection_string;
 			connection = new SqlConnection(CONNECTION_STRING);
 			AllocConsole();
@@ -28,10 +28,8 @@ namespace Academy
 		{
 			FreeConsole();
 		}
-
-		public Dictionary<string, int> GetDictionary(string columns, string tables, string condition="")
+		public Dictionary<string, int> GetDictionary(string columns, string tables, string condition = "")
 		{
-
 			Dictionary<string, int> values = new Dictionary<string, int>();
 			string cmd = $"SELECT {columns} FROM {tables}";
 			if (condition != "") cmd += $" WHERE {condition}";
@@ -41,8 +39,8 @@ namespace Academy
 			if (reader.HasRows)
 			{
 				while (reader.Read())
-				{ 
-						values[reader[1].ToString()] = Convert.ToInt32(reader[0]);
+				{
+					values[reader[1].ToString()] = Convert.ToInt32(reader[0]);
 				}
 			}
 			reader.Close();
